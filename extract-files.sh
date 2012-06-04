@@ -205,6 +205,7 @@ if [ ! -f "Adreno200-AU_LINUX_ANDROID_ICS_CHOCO_CS.04.00.03.06.001.zip" ]; then
 	echo Adreno driver not found. Please download the ARMv7 adreno driver from
 	echo https://developer.qualcomm.com/mobile-development/mobile-technologies/gaming-graphics-optimization-adreno/tools-and-resources
 	echo and put it in $PWD
+	exit -1
 fi
 
 unzip -o -d ../../../vendor/$MANUFACTURER/$DEVICE Adreno200-AU_LINUX_ANDROID_ICS_CHOCO_CS.04.00.03.06.001.zip
