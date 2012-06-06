@@ -1,6 +1,7 @@
 $(call inherit-product, device/qcom/common/common.mk)
 PRODUCT_COPY_FILES := \
-  device/qcom/otoro/Fts-touchscreen.idc:system/usr/idc/Fts-touchscreen.idc
+  device/qcom/otoro/Fts-touchscreen.idc:system/usr/idc/Fts-touchscreen.idc \
+  device/qcom/otoro/atmel-touchscreen.idc:system/usr/idc/atmel-touchscreen.idc
 
 $(call inherit-product-if-exists, vendor/qcom/otoro/otoro-vendor-blobs.mk)
 $(call inherit-product-if-exists, vendor/qcom/common/vendor-blobs.mk)
