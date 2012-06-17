@@ -201,14 +201,14 @@ COMMON_AUDIO="
 	"
 #copy_files "$COMMON_AUDIO" "system/lib" "audio"
 
-if [ ! -f "Adreno200-AU_LINUX_ANDROID_ICS_CHOCO_CS.04.00.03.06.001.zip" ]; then
+if [ ! -f "../../../Adreno200-AU_LINUX_ANDROID_ICS_CHOCO_CS.04.00.03.06.001.zip" ]; then
 	echo Adreno driver not found. Please download the ARMv7 adreno driver from
 	echo https://developer.qualcomm.com/mobile-development/mobile-technologies/gaming-graphics-optimization-adreno/tools-and-resources
-	echo and put it in $PWD
+	echo and put it in the top level B2G directory
 	exit -1
 fi
 
-unzip -o -d ../../../vendor/$MANUFACTURER/$DEVICE Adreno200-AU_LINUX_ANDROID_ICS_CHOCO_CS.04.00.03.06.001.zip
+unzip -o -d ../../../vendor/$MANUFACTURER/$DEVICE ../../../Adreno200-AU_LINUX_ANDROID_ICS_CHOCO_CS.04.00.03.06.001.zip
 (cat << EOF) | sed s/__DEVICE__/$DEVICE/g | sed s/__MANUFACTURER__/$MANUFACTURER/g > ../../../vendor/$MANUFACTURER/$DEVICE/$DEVICE-vendor-blobs.mk
 # Copyright (C) 2010 The Android Open Source Project
 #
