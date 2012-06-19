@@ -167,6 +167,7 @@ COMMON_BINS="
 	proximity.init
 	qmiproxy
 	qmuxd
+	vold
 	"
 copy_files "$COMMON_BINS" "system/bin" ""
 
