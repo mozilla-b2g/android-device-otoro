@@ -31,8 +31,13 @@ else
 fi
 
 case "$DEVICE_BUILD_ID" in
+ICS*)
+  FIRMWARE=ICS
+  echo Found ICS firmware with build ID $DEVICE_BUILD_ID >&2
+  ;;
 *)
-  echo Found firmware with build ID $DEVICE_BUILD_ID >&2
+  FIRMWARE=GB
+  echo Found GB firmware with build ID $DEVICE_BUILD_ID >&2
   ;;
 esac
 
@@ -162,38 +167,89 @@ COMMON_LIBS="
 	libwmsts.so
 	"
 
+if [ "$FIRMWARE" = ICS ]; then
+COMMON_LIBS="$COMMON_LIBS
+	libcommondefs.so
+	libgemini.so
+	libgps.utils.so
+	libril.so
+	libmmjpeg.so
+	libmmipl.so
+	liboemcamera.so
+	libloc_adapter.so
+	libloc_api-rpc-qc.so
+	libloc_eng.so
+	libqdi.so
+	librpc.so
+	"
+fi
+
 copy_files "$COMMON_LIBS" "system/lib" ""
 
 COMMON_BINS="
 	ATFWD-daemon
 	akmd8962
-	amploader
 	bridgemgrd
-	dhcpcd
 	fm_qsoc_patches
 	fmconfig
 	hci_qcomm_init
-	netd
 	netmgrd
 	port-bridge
 	proximity.init
 	qmiproxy
 	qmuxd
+	"
+if [ "$FIRMWARE" = ICS ]; then
+COMMON_BINS="$COMMON_BINS
+	rild
+	"
+else
+COMMON_BINS="$COMMON_BINS
+	amploader
+	dhcpcd
+	netd
 	vold
 	"
+fi
+
 copy_files "$COMMON_BINS" "system/bin" ""
 
 COMMON_HW="
 	sensors.default.so
 	"
+if [ "$FIRMWARE" = ICS ]; then
+COMMON_HW="$COMMON_HW
+	camera.msm7627a.so
+	gps.default.so
+	"
+fi
+
 copy_files "$COMMON_HW" "system/lib/hw" "hw"
 
+if [ "$FIRMWARE" = ICS ]; then
+COMMON_WIFI="
+	ath6kl_sdio.ko
+	cfg80211.ko
+	"
+else
 COMMON_WIFI="
 	ar6000.ko
 	kineto_gan.ko
 	"
+fi
+
 copy_files "$COMMON_WIFI" "system/wifi" "wifi"
 
+if [ "$FIRMWARE" = ICS ]; then
+COMMON_ATH6K="
+	athtcmd_ram.bin
+	bdata.bin
+	fw-3.bin
+	nullTestFlow.bin
+	utf.bin
+	"
+copy_files "$COMMON_ATH6K" "system/etc/firmware/ath6k/AR6003/hw2.1.1" "wifi"
+else
 COMMON_ATH6K="
 	athtcmd_ram.bin
 	athwlan.bin
@@ -206,8 +262,9 @@ COMMON_ATH6K="
 	otp.bin
 	"
 copy_files "$COMMON_ATH6K" "system/wifi/ath6k/AR6003/hw2.1.1" "wifi"
+fi
 
-COMMON_ETC="init.qcom.bt.sh"
+COMMON_ETC="init.qcom.bt.sh gps.conf"
 copy_files "$COMMON_ETC" "system/etc" "etc"
 
 COMMON_AUDIO="
@@ -240,13 +297,6 @@ unzip -o -d ../../../vendor/$MANUFACTURER/$DEVICE ../../../Adreno200-AU_LINUX_AN
 LOCAL_PATH := vendor/$MANUFACTURER/$DEVICE
 
 PRODUCT_COPY_FILES := \
-    \$(LOCAL_PATH)/system/etc/firmware/a300_pm4.fw:system/etc/firmware/a300_pm4.fw \\
-    \$(LOCAL_PATH)/system/etc/firmware/a225_pm4.fw:system/etc/firmware/a225_pm4.fw \\
-    \$(LOCAL_PATH)/system/etc/firmware/a300_pfp.fw:system/etc/firmware/a300_pfp.fw \\
-    \$(LOCAL_PATH)/system/etc/firmware/a225p5_pm4.fw:system/etc/firmware/a225p5_pm4.fw \\
-    \$(LOCAL_PATH)/system/etc/firmware/leia_pfp_470.fw:system/etc/firmware/leia_pfp_470.fw \\
-    \$(LOCAL_PATH)/system/etc/firmware/a225_pfp.fw:system/etc/firmware/a225_pfp.fw \\
-    \$(LOCAL_PATH)/system/etc/firmware/leia_pm4_470.fw:system/etc/firmware/leia_pm4_470.fw \\
     \$(LOCAL_PATH)/system/etc/firmware/yamato_pfp.fw:system/etc/firmware/yamato_pfp.fw \\
     \$(LOCAL_PATH)/system/etc/firmware/yamato_pm4.fw:system/etc/firmware/yamato_pm4.fw \\
     \$(LOCAL_PATH)/system/lib/libC2D2.so:system/lib/libC2D2.so \\
