@@ -170,6 +170,7 @@ COMMON_LIBS="
 if [ "$FIRMWARE" = ICS ]; then
 COMMON_LIBS="$COMMON_LIBS
 	libcommondefs.so
+	libgenlock.so
 	libgemini.so
 	libgps.utils.so
 	libril.so
