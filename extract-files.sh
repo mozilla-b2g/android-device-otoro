@@ -169,6 +169,7 @@ COMMON_LIBS="
 
 if [ "$FIRMWARE" = ICS ]; then
 COMMON_LIBS="$COMMON_LIBS
+	libcamera_client.so
 	libcommondefs.so
 	libgenlock.so
 	libgemini.so
