@@ -10,7 +10,8 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full.mk)
 
 PRODUCT_PROPERTY_OVERRIDES += \
   rild.libpath=/system/lib/libril-qc-1.so \
-  rild.libargs=-d/dev/smd0
+  rild.libargs=-d/dev/smd0 \
+  ro.use_data_netmgrd=true
 
 # Discard inherited values and use our own instead.
 PRODUCT_NAME := full_otoro
