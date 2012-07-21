@@ -143,6 +143,7 @@ COMMON_LIBS="
 	libauth.so
 	libcm.so
 	libdiag.so
+  libdivxdrmdecrypt.so
 	libdsi_netctrl.so
 	libdsm.so
 	libdss.so
@@ -150,9 +151,12 @@ COMMON_LIBS="
 	libgsdi_exp.so
 	libgstk_exp.so
 	libidl.so
+  libmm-adspsvc.so
 	libmmgsdilib.so
 	libnetmgr.so
 	libnv.so
+  libOmxAacDec.so
+  libOmxH264Dec.so
 	liboncrpc.so
 	libpbmlib.so
 	libqdp.so
