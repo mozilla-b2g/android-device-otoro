@@ -5,6 +5,12 @@ TARGET_NO_KERNEL := true
 BOARD_KERNEL_PAGESIZE = 2048
 BOARD_KERNEL_SPARESIZE = 64
 
+ifneq (,$(wildcard vendor/qcom/otoro/kernel))
+TARGET_PREBUILT_KERNEL := vendor/qcom/otoro/kernel
+BOARD_KERNEL_BASE := 200000
+TARGET_NO_KERNEL := false
+BOARD_KERNEL_CMDLINE := androidboot.hardware=otoro
+endif
 
 TARGET_USERIMAGES_USE_EXT4 := false
 

@@ -313,3 +313,15 @@ PRODUCT_COPY_FILES := \
     \$(LOCAL_PATH)/system/lib/egl/libq3dtools_adreno200.so:system/lib/egl/libq3dtools_adreno200.so \\
     \$(LOCAL_PATH)/system/lib/egl/libGLES_android.so:system/lib/egl/libGLES_android.so
 EOF
+
+BOOTIMG=boot-otoro.img
+if [ -f ../../../${BOOTIMG} ]; then
+    (cd ../../.. && ./build.sh unbootimg)
+    . ../../../build/envsetup.sh
+    HOST_OUT=$(get_build_var HOST_OUT_$(get_build_var HOST_BUILD_TYPE))
+    KERNEL_DIR=../../../vendor/${MANUFACTURER}/${DEVICE}
+    cp ../../../${BOOTIMG} ${KERNEL_DIR}
+    ../../../${HOST_OUT}/bin/unbootimg ${KERNEL_DIR}/${BOOTIMG}
+    mv ${KERNEL_DIR}/${BOOTIMG}-kernel ${KERNEL_DIR}/kernel
+    rm -f ${KERNEL_DIR}/${BOOTIMG}-ramdisk.cpio.gz ${KERNEL_DIR}/${BOOTIMG}-second ${KERNEL_DIR}/${BOOTIMG}-mk ${KERNEL_DIR}/${BOOTIMG}
+fi
