@@ -12,7 +12,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
   rild.libpath=/system/lib/libril-qc-1.so \
   rild.libargs=-d/dev/smd0 \
   ro.use_data_netmgrd=true \
-  ro.moz.ril.sim_state_extra_field=true \
+  ro.moz.ril.simstate_extra_field=true \
   ro.moz.ril.emergency_by_default=true
 
 # Discard inherited values and use our own instead.
