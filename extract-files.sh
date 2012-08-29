@@ -210,7 +210,7 @@ COMMON_BINS="
 if [ "$FIRMWARE" = ICS ]; then
 COMMON_BINS="$COMMON_BINS
 	rild
-    radish
+	radish
 	"
 else
 COMMON_BINS="$COMMON_BINS
