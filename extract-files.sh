@@ -227,12 +227,12 @@ copy_files "$COMMON_BINS" "system/bin" ""
 
 COMMON_HW="
 	sensors.default.so
-        audio.primary.msm7627a.so
 	"
 if [ "$FIRMWARE" = ICS ]; then
 COMMON_HW="$COMMON_HW
 	camera.msm7627a.so
 	gps.default.so
+	audio.primary.msm7627a.so
 	"
 fi
 
