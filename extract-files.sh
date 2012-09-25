@@ -189,8 +189,6 @@ COMMON_LIBS="$COMMON_LIBS
 	libloc_eng.so
 	libqdi.so
 	librpc.so
-	libulp.so
-	libulp2.so
 	"
 fi
 
