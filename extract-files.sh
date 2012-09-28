@@ -158,6 +158,7 @@ COMMON_LIBS="
 	libOmxAacDec.so
 	libOmxH264Dec.so
 	libOmxMp3Dec.so
+	libOmxVidEnc.so
 	libOmxVp8Dec.so
 	liboncrpc.so
 	libpbmlib.so
