@@ -22,6 +22,21 @@ if [[ -z "${ANDROIDFS_DIR}" && -d ../../../backup-${DEVICE}/system ]]; then
     ANDROIDFS_DIR=../../../backup-${DEVICE}
 fi
 
+B2G_DEVICE=0
+if [[ -d "${ANDROIDFS_DIR}" && -d "${ANDROIDFS_DIR}/system/b2g" ]]; then
+    echo " * Your device backup from ${ANDROIDFS_DIR} is already using B2G."
+    B2G_DEVICE=1
+elif [[ -z "${ANDROIDFS_DIR}" && $(adb shell "[ -d /system/b2g ] && echo 1") ]]; then
+    echo " * Your phone is already using B2G."
+    B2G_DEVICE=1
+fi
+if [[ $B2G_DEVICE == 1 ]]; then
+    echo " * Either connect a phone still using Android,"
+    echo " * or provide a backup image of a device on Android"
+    echo " * via 'ANDROIDFS_DIR' env variable."
+    exit -1
+fi
+
 if [[ -z "${ANDROIDFS_DIR}" ]]; then
     echo Pulling files from device
     DEVICE_BUILD_ID=`adb shell cat /system/build.prop | grep ro.build.display.id | sed -e 's/ro.build.display.id=//' | tr -d '\n\r'`
