@@ -172,6 +172,7 @@ COMMON_LIBS="
 	libnv.so
 	libOmxAacDec.so
 	libOmxH264Dec.so
+	libOmxMpeg4Dec.so
 	libOmxMp3Dec.so
 	libOmxVidEnc.so
 	libOmxVp8Dec.so
