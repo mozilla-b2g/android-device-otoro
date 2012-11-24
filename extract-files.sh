@@ -212,7 +212,6 @@ fi
 copy_files "$COMMON_LIBS" "system/lib" ""
 
 COMMON_BINS="
-	ATFWD-daemon
 	akmd8962
 	bridgemgrd
 	fm_qsoc_patches
