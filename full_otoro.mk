@@ -15,7 +15,9 @@ PRODUCT_PROPERTY_OVERRIDES += \
   ro.use_data_netmgrd=true \
   ro.moz.cam.0.sensor_offset=180 \
   ro.moz.ril.simstate_extra_field=true \
-  ro.moz.ril.emergency_by_default=true
+  ro.moz.ril.emergency_by_default=true \
+  ro.moz.omx.hw.max_width=640 \
+  ro.moz.omx.hw.max_height=360
 
 # Discard inherited values and use our own instead.
 PRODUCT_NAME := full_otoro
