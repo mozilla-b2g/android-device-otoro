@@ -14,9 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-DEVICE=otoro
+DEVICE=${DEVICE:-otoro}
 COMMON=common
-MANUFACTURER=qcom
+MANUFACTURER=${MANUFACTURER:-qcom}
 
 if [[ -z "${ANDROIDFS_DIR}" && -d ../../../backup-${DEVICE}/system ]]; then
     ANDROIDFS_DIR=../../../backup-${DEVICE}
@@ -46,13 +46,9 @@ else
 fi
 
 case "$DEVICE_BUILD_ID" in
-ICS*)
-  FIRMWARE=ICS
-  echo Found ICS firmware with build ID $DEVICE_BUILD_ID >&2
-  ;;
 *)
-  FIRMWARE=GB
-  echo Found GB firmware with build ID $DEVICE_BUILD_ID >&2
+  FIRMWARE=ICS
+  echo Found firmware with build ID $DEVICE_BUILD_ID >&2
   ;;
 esac
 
@@ -188,10 +184,6 @@ COMMON_LIBS="
 	libSimCardAuth.so
 	libwms.so
 	libwmsts.so
-	"
-
-if [ "$FIRMWARE" = ICS ]; then
-COMMON_LIBS="$COMMON_LIBS
 	libcamera_client.so
 	libcommondefs.so
 	libgenlock.so
@@ -207,12 +199,12 @@ COMMON_LIBS="$COMMON_LIBS
 	libqdi.so
 	librpc.so
 	"
-fi
 
 copy_files "$COMMON_LIBS" "system/lib" ""
 
 COMMON_BINS="
 	akmd8962
+	akmd8962_new
 	bridgemgrd
 	fm_qsoc_patches
 	fmconfig
@@ -222,51 +214,28 @@ COMMON_BINS="
 	proximity.init
 	qmiproxy
 	qmuxd
-	"
-if [ "$FIRMWARE" = ICS ]; then
-COMMON_BINS="$COMMON_BINS
-	rild
 	radish
+	rild
 	"
-else
-COMMON_BINS="$COMMON_BINS
-	amploader
-	dhcpcd
-	netd
-	vold
-	"
-fi
 
 copy_files "$COMMON_BINS" "system/bin" ""
 
 COMMON_HW="
 	sensors.default.so
-	"
-if [ "$FIRMWARE" = ICS ]; then
-COMMON_HW="$COMMON_HW
 	camera.msm7627a.so
 	gps.default.so
 	audio.primary.msm7627a.so
 	"
-fi
 
 copy_files "$COMMON_HW" "system/lib/hw" "hw"
 
-if [ "$FIRMWARE" = ICS ]; then
 COMMON_WIFI="
 	ath6kl_sdio.ko
 	cfg80211.ko
 	"
-else
-COMMON_WIFI="
-	ar6000.ko
-	kineto_gan.ko
-	"
-fi
 
 copy_files "$COMMON_WIFI" "system/wifi" "wifi"
 
-if [ "$FIRMWARE" = ICS ]; then
 COMMON_ATH6K="
 	athtcmd_ram.bin
 	bdata.bin
@@ -275,20 +244,6 @@ COMMON_ATH6K="
 	utf.bin
 	"
 copy_files "$COMMON_ATH6K" "system/etc/firmware/ath6k/AR6003/hw2.1.1" "wifi"
-else
-COMMON_ATH6K="
-	athtcmd_ram.bin
-	athwlan.bin
-	athwlan_mobile.bin
-	athwlan_router.bin
-	athwlan_tablet.bin
-	bdata.SD31.bin
-	data.patch.hw3_0.bin
-	device.bin
-	otp.bin
-	"
-copy_files "$COMMON_ATH6K" "system/wifi/ath6k/AR6003/hw2.1.1" "wifi"
-fi
 
 COMMON_ETC="init.qcom.bt.sh gps.conf"
 copy_files "$COMMON_ETC" "system/etc" "etc"
