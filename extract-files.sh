@@ -211,12 +211,15 @@ COMMON_BINS="
 	hci_qcomm_init
 	netmgrd
 	port-bridge
-	proximity.init
 	qmiproxy
 	qmuxd
 	radish
 	rild
 	"
+
+if [ "$DEVICE" = otoro ]; then
+	COMMON_BINS="$COMMON_BINS proximity.init"
+fi
 
 copy_files "$COMMON_BINS" "system/bin" ""
 
